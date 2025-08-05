@@ -1,0 +1,39 @@
+# Node.js dependencies and logs
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files (do not commit sensitive info)
+server/.env
+client/.env
+
+# Build output for React frontend
+client/build/
+
+# Tailwind CSS cache (optional)
+client/node_modules/.cache/
+
+# Mac or Linux system files
+.DS_Store
+*.swp
+
+# VSCode settings folder
+.vscode/
+
+# Logs
+logs
+*.log
+*.log.*
+
+# Debug folders
+debug/
+*.local
+
+# npm package lock files
+package-lock.json
+yarn.lock
+
+# Optional: eslint cache
+.client/.eslintcache
+server/.eslintcache
