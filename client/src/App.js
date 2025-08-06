@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Upcoming from "./pages/Upcoming";
 
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
@@ -55,6 +56,7 @@ function App() {
           <Route path="/language/marathi" element={<MarathiMovies />} />
           <Route path="/language/hindi" element={<HindiMovies />} />
           <Route path="/language/english" element={<EnglishMovies />} />
+          <Route path="/upcoming" element={<Upcoming />} />
         </Routes>
       </main>
     </Router>
