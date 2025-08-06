@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
-
+import MarathiMovies from './pages/MarathiMovies';
+import HindiMovies from './pages/HindiMovies';
+import EnglishMovies from './pages/EnglishMovies';
 import Home from './pages/Home';
 import MovieDetails from './pages/MovieDetails';
 import Trailers from './pages/Trailers';
@@ -50,6 +52,9 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login onLogin={setUser} />} />
           <Route path="/register" element={<Register onRegister={setUser} />} />
+          <Route path="/language/marathi" element={<MarathiMovies />} />
+          <Route path="/language/hindi" element={<HindiMovies />} />
+          <Route path="/language/english" element={<EnglishMovies />} />
         </Routes>
       </main>
     </Router>
