@@ -18,6 +18,7 @@ import Profile from './pages/Profile';
 import About from './pages/About';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Parking from "./pages/Parking";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -58,6 +59,7 @@ function App() {
           <Route path="/language/english" element={<EnglishMovies />} />
           <Route path="/upcoming" element={<Upcoming />} />
           <Route path="/movie/:movieId/booking" element={<MovieBookingPage />} />
+          <Route path="/parking" element={<Parking />} />
         </Routes>
       </main>
     </Router>

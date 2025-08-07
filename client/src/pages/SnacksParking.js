@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
 
 export default function SnacksParking() {
   const [snacks, setSnacks] = useState([]);
   const [parking, setParking] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get("/snacks").then((res) => setSnacks(res.data)).catch(console.error);
@@ -11,7 +13,7 @@ export default function SnacksParking() {
   }, []);
 
   return (
-    <div className="max-w-5xl mx-auto mt-8 px-6">
+    <div className="max-w-5xl mx-auto mt-8 px-6 pb-10"> {/* Added bottom padding to avoid overlap with fixed footer nav if any */}
       <h2 className="text-3xl font-bold mb-6">Snacks & Parking</h2>
 
       {/* Snacks Section */}
@@ -25,7 +27,7 @@ export default function SnacksParking() {
             <img
               src={snack.image || "https://via.placeholder.com/200x150?text=No+Image"}
               alt={snack.name}
-              className="rounded-lg mb-2"
+              className="rounded-lg mb-2 object-cover w-full h-40"
             />
             <h4 className="font-semibold">{snack.name}</h4>
             <p className="text-purple-700 font-bold">₹{snack.price}</p>
@@ -34,20 +36,17 @@ export default function SnacksParking() {
       </div>
 
       {/* Parking Section */}
-      <h3 className="text-2xl font-semibold mb-4">Parking</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-6">
-        {parking.map((p) => (
-          <div
-            key={p._id}
-            className="bg-white rounded-xl shadow p-4 cursor-pointer hover:scale-105 transition"
-          >
-            <h4 className="font-semibold mb-2">{p.type}</h4> {/* Changed from p.name to p.type */}
-            <p className="text-gray-600 mb-2">{p.description}</p>
-            <p className="text-purple-700 font-bold">
-              {p.price === 0 ? "Free" : `₹${p.price}`}
-            </p>
-          </div>
-        ))}
+      
+
+      {/* Button to navigate to the separate parking page */}
+      <div className="flex justify-center mt-8">
+        <button
+          onClick={() => navigate("/parking")}
+          className="bg-purple-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-purple-700 transition"
+          type="button"
+        >
+          View Parking Options
+        </button>
       </div>
     </div>
   );
