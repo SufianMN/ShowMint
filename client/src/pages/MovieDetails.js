@@ -37,7 +37,7 @@ export default function MovieDetails() {
       <p className="text-gray-600 mb-6"><span className="font-semibold">Cast:</span> {movie.cast?.join(", ")}</p>
       <p className="mb-6">{movie.description}</p>
       <button
-        onClick={() => navigate(`/seat-booking/${movie._id}`)}
+        onClick={() => navigate(`/movie/${movie._id}/booking`)}
         className="bg-gradient-to-br from-purple-600 to-indigo-700 text-white font-bold py-3 px-8 rounded-full hover:opacity-90 transition"
       >
         Book Now

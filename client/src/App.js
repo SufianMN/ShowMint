@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Upcoming from "./pages/Upcoming";
-
+import MovieBookingPage from "./pages/MovieBookingPage";
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import MarathiMovies from './pages/MarathiMovies';
@@ -57,6 +57,7 @@ function App() {
           <Route path="/language/hindi" element={<HindiMovies />} />
           <Route path="/language/english" element={<EnglishMovies />} />
           <Route path="/upcoming" element={<Upcoming />} />
+          <Route path="/movie/:movieId/booking" element={<MovieBookingPage />} />
         </Routes>
       </main>
     </Router>

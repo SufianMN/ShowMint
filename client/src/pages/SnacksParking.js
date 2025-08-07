@@ -14,12 +14,16 @@ export default function SnacksParking() {
     <div className="max-w-5xl mx-auto mt-8 px-6">
       <h2 className="text-3xl font-bold mb-6">Snacks & Parking</h2>
 
+      {/* Snacks Section */}
       <h3 className="text-2xl font-semibold mb-4">Snacks</h3>
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-6 mb-10">
         {snacks.map((snack) => (
-          <div key={snack._id} className="bg-white rounded-xl shadow p-4 cursor-pointer hover:scale-105 transition">
+          <div
+            key={snack._id}
+            className="bg-white rounded-xl shadow p-4 cursor-pointer hover:scale-105 transition"
+          >
             <img
-              src={snack.imageUrl || "https://via.placeholder.com/200x150"}
+              src={snack.image || "https://via.placeholder.com/200x150?text=No+Image"}
               alt={snack.name}
               className="rounded-lg mb-2"
             />
@@ -29,13 +33,19 @@ export default function SnacksParking() {
         ))}
       </div>
 
+      {/* Parking Section */}
       <h3 className="text-2xl font-semibold mb-4">Parking</h3>
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-6">
         {parking.map((p) => (
-          <div key={p._id} className="bg-white rounded-xl shadow p-4 cursor-pointer hover:scale-105 transition">
-            <h4 className="font-semibold mb-2">{p.name}</h4>
+          <div
+            key={p._id}
+            className="bg-white rounded-xl shadow p-4 cursor-pointer hover:scale-105 transition"
+          >
+            <h4 className="font-semibold mb-2">{p.type}</h4> {/* Changed from p.name to p.type */}
             <p className="text-gray-600 mb-2">{p.description}</p>
-            <p className="text-purple-700 font-bold">₹{p.price}</p>
+            <p className="text-purple-700 font-bold">
+              {p.price === 0 ? "Free" : `₹${p.price}`}
+            </p>
           </div>
         ))}
       </div>
