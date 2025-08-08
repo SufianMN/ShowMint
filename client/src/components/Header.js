@@ -16,14 +16,14 @@ export default function Header({ user, onLogout }) {
       </div>
 
       {/* Search Input with icon */}
-      <div className="relative group flex-shrink-0">
+      <div className="relative flex-justify-center">
         <Search 
-          className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white pointer-events-none" 
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white pointer-events-none" 
         />
         <input
           type="text"
-          placeholder="Search movies..."
-          className="rounded-full pl-10 pr-4 py-2 w-64 bg-white/15 backdrop-blur-sm placeholder-white/80 text-white shadow-inner border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 focus:bg-white/20 transition-all duration-300 hover:bg-white/20"
+          placeholder="Search for Movies Here!"
+          className="rounded-full pl-10 pr-4 py-2 w-64 bg-white/15 placeholder-white/80 text-white shadow-inner border border-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 focus:bg-white/20 transition-all duration-300 hover:bg-white/20"
         />
       </div>
 
@@ -38,7 +38,7 @@ export default function Header({ user, onLogout }) {
           <MapPin 
             className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white pointer-events-none" 
           />
-          <select className="rounded-full pl-10 pr-8 py-2 bg-white/15 backdrop-blur-sm text-white border border-white/20 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all duration-300 appearance-none cursor-pointer whitespace-nowrap">
+          <select className="rounded-full pl-10 pr-8 py-2 bg-white/15 text-white border border-white/20 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/30 transition-all duration-300 appearance-none cursor-pointer whitespace-nowrap">
             <option>Mumbai</option>
             <option>Delhi</option>
             <option>Bangalore</option>

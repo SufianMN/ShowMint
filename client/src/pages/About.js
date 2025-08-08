@@ -12,6 +12,7 @@ export default function About() {
     <div className="max-w-3xl mx-auto my-8 p-10 bg-gradient-to-br from-purple-500 to-indigo-800 rounded-2xl text-white">
       <h1 className="text-3xl font-extrabold mb-4">About ShowMint</h1>
       <p className="mb-4">Your premier cinema booking platform delivering exceptional movie experiences.</p>
+      <p className="mb-4">Contact: support@showmint.com</p>
       <h2 className="text-xl font-bold mt-8 mb-4">Founders</h2>
       <div className="flex flex-wrap gap-8 mb-8">
         {founders.map(f => (

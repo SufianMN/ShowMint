@@ -11,6 +11,8 @@ import Home from './pages/Home';
 import MovieDetails from './pages/MovieDetails';
 import Trailers from './pages/Trailers';
 import SeatBooking from './pages/SeatBooking';
+import BookingSummary from "./pages/BookingSummary"; // adjust path if needed
+import Payment from "./pages/Payment";
 import TicketSummary from './pages/TicketSummary';
 import FinalTicket from './pages/FinalTicket';
 import SnacksParking from './pages/SnacksParking';
@@ -19,6 +21,7 @@ import About from './pages/About';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Parking from "./pages/Parking";
+import TopRated from './pages/TopRated';  // Import your new TopRated page
 
 function App() {
   const [user, setUser] = useState(null);
@@ -49,7 +52,13 @@ function App() {
           <Route path="/seat-booking/:id" element={<SeatBooking />} />
           <Route path="/ticket-summary" element={<TicketSummary />} />
           <Route path="/final-ticket" element={<FinalTicket />} />
+
+          {/* Keep Snacks & Parking route but no sidebar link */}
           <Route path="/snacks-parking" element={<SnacksParking />} />
+
+          {/* Add Top Rated route */}
+          <Route path="/top-rated" element={<TopRated />} />
+
           <Route path="/profile" element={user ? <Profile user={user} /> : <Navigate to="/login" />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login onLogin={setUser} />} />
@@ -60,6 +69,9 @@ function App() {
           <Route path="/upcoming" element={<Upcoming />} />
           <Route path="/movie/:movieId/booking" element={<MovieBookingPage />} />
           <Route path="/parking" element={<Parking />} />
+          <Route path="/booking-summary" element={<BookingSummary />} />
+          <Route path="/payment" element={<Payment />} />
+
         </Routes>
       </main>
     </Router>

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaLanguage, FaClock, FaUtensils } from "react-icons/fa";
+import { FaLanguage, FaClock, FaStar } from "react-icons/fa";
 
 export default function Sidebar() {
   const [langOpen, setLangOpen] = useState(false);
   const location = useLocation();
 
-  // Language links array for map rendering and easy extension
   const languages = [
     { name: "Marathi", path: "/language/marathi" },
     { name: "Hindi", path: "/language/hindi" },
@@ -15,7 +14,6 @@ export default function Sidebar() {
 
   return (
     <nav className="fixed top-16 left-0 w-60 min-h-screen bg-gradient-to-b from-zinc-900/95 via-purple-900/90 to-indigo-900/95 backdrop-blur-lg text-white pt-6 shadow-2xl border-r border-white/10">
-
       {/* Languages Section */}
       <button
         onClick={() => setLangOpen(!langOpen)}
@@ -60,7 +58,20 @@ export default function Sidebar() {
           ))}
         </div>
       </div>
-
+      {/* Top Rated Link */}
+      <Link
+        to="/top-rated"
+        className={`flex items-center gap-3 px-6 py-4 hover:bg-white/10 transition-all duration-300 group mt-2 rounded-lg ${
+          location.pathname.startsWith("/top-rated")
+            ? "bg-purple-700/50 backdrop-blur-sm border-r-2 border-purple-400 text-purple-300"
+            : "text-white"
+        }`}
+      >
+        <div className="p-2 rounded-lg bg-gradient-to-br from-yellow-400 to-amber-500 shadow-lg group-hover:shadow-xl transition-all duration-300">
+          <FaStar className="w-5 h-5" />
+        </div>
+        <span className="font-semibold group-hover:text-purple-300 transition-colors">Top Rated</span>
+      </Link>
       {/* Upcoming Link */}
       <Link
         to="/upcoming"
@@ -76,20 +87,7 @@ export default function Sidebar() {
         <span className="font-semibold group-hover:text-purple-300 transition-colors">Upcoming</span>
       </Link>
 
-      {/* Snacks & Parking Link */}
-      <Link
-        to="/snacks-parking"
-        className={`flex items-center gap-3 px-6 py-4 hover:bg-white/10 transition-all duration-300 group mt-2 rounded-lg ${
-          location.pathname.startsWith("/snacks-parking")
-            ? "bg-purple-700/50 backdrop-blur-sm border-r-2 border-purple-400 text-purple-300"
-            : "text-white"
-        }`}
-      >
-        <div className="p-2 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 shadow-lg group-hover:shadow-xl transition-all duration-300">
-          <FaUtensils className="w-5 h-5" />
-        </div>
-        <span className="font-semibold group-hover:text-purple-300 transition-colors">Snacks & Parking</span>
-      </Link>
+      
 
       {/* Decorative gradient overlay at bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-indigo-900/80 to-transparent pointer-events-none"></div>

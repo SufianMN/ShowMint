@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import api from "../utils/api";
+import { Link } from "react-router-dom";
 
-// Colors per your image
+// Colors per seat types
 const seatTypeColor = {
   Regular: "bg-gray-200",
   VIP: "bg-yellow-400",
@@ -11,25 +12,35 @@ const seatTypeColor = {
 const SeatBooking = ({ movieId }) => {
   const [seats, setSeats] = useState([]);
   const [selected, setSelected] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Fetch seats for this movie
+  // Fetch seats for the specified movieId
   useEffect(() => {
+    setLoading(true);
     api.get(`/seats?movieId=${movieId}`)
-      .then(res => setSeats(res.data))
-      .catch(() => setSeats([]));
+      .then(res => {
+        setSeats(res.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to load seats:", err);
+        setError("Failed to load seats. Please try again.");
+        setLoading(false);
+      });
   }, [movieId]);
 
-  // Map seats into rows (A–F, columns 1–8)
+  // Group seats by their row (A-F)
   const rows = {};
   seats.forEach(seat => {
     const row = seat.seatNumber[0];
-    rows[row] = rows[row] || [];
+    if (!rows[row]) rows[row] = [];
     rows[row].push(seat);
   });
 
-  // Seat select handler
-  const handleSelect = seat => {
+  // Handle selecting or deselecting seats
+  const handleSelect = (seat) => {
     if (!seat.isAvailable || seat.seatType === "Disabled") return;
     setSelected(sel =>
       sel.includes(seat._id)
@@ -38,37 +49,39 @@ const SeatBooking = ({ movieId }) => {
     );
   };
 
-  // Booking logic
-  const bookSeats = async () => {
-    setBooking(true);
-    try {
-      await Promise.all(selected.map(id => api.patch(`/seats/${id}/book`)));
-      alert("Seats booked!");
-      setSelected([]);
-      // reload
-      const res = await api.get(`/seats?movieId=${movieId}`);
-      setSeats(res.data);
-    } catch {
-      alert("Failed to book seats.");
-    }
-    setBooking(false);
-  };
-
-  // Price calculation (assume base ₹100)
+  // Price calculation assuming base ₹100 and multiplier per seat
   const total = seats
     .filter(seat => selected.includes(seat._id))
-    .reduce((sum, s) => sum + 100 * s.priceMultiplier, 0);
+    .reduce((sum, seat) => sum + 100 * (seat.priceMultiplier || 1), 0);
 
-  // Render grid like BookMyShow
+  // On "Book Now" click, navigate to Snacks & Parking page with selections
+  // Do NOT mark seats as booked here (booking happens after payment)
+  const handleBookNow = () => {
+    if (selected.length === 0) {
+      alert("Please select at least one seat before proceeding.");
+      return;
+    }
+    setBooking(true);
+    // Navigate with React Router 'to' and pass state data
+    // Replace <Link> with programmatic navigation if preferred
+  };
+
+  if (loading) return <div className="p-4 text-center">Loading seats...</div>;
+
   return (
     <div className="max-w-2xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6">Select Your Seats</h2>
+
+      {error && (
+        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">{error}</div>
+      )}
+
       <div className="space-y-2 bg-white p-4 rounded shadow">
         {["A", "B", "C", "D", "E", "F"].map(row =>
           <div key={row} className="flex gap-2 items-center">
             <span className="w-5 font-bold">{row}</span>
             {Array(8).fill(0).map((_, idx) => {
-              const seat = seats.find(
+              const seat = rows[row]?.find(
                 s => s.seatNumber === `${row}${idx + 1}`
               );
               if (!seat) return (
@@ -88,6 +101,7 @@ const SeatBooking = ({ movieId }) => {
                     isSelected && "ring-2 ring-purple-500 scale-110",
                   ].filter(Boolean).join(" ")}
                   title={`Rs.${seat.priceMultiplier * 100} (${seat.seatType})`}
+                  aria-pressed={isSelected}
                 >
                   {idx + 1}
                   <span className="text-[0.6em]">{seat.seatType[0]}</span>
@@ -97,6 +111,7 @@ const SeatBooking = ({ movieId }) => {
           </div>
         )}
       </div>
+
       <div className="flex flex-wrap items-center gap-4 mt-6">
         <div>
           <span className="inline-block w-4 h-4 bg-yellow-400 rounded mr-1"></span>VIP
@@ -108,13 +123,16 @@ const SeatBooking = ({ movieId }) => {
         <div>
           Selected: <b>{selected.length}</b> seat(s) – Total: <b>₹{total}</b>
         </div>
-        <button
-          onClick={bookSeats}
-          disabled={selected.length === 0 || booking}
-          className="ml-auto px-5 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50"
+        {/* On click: navigate passing movieId and selected seat IDs */}
+        <Link
+          to="/snacks-parking"
+          state={{ movieId, seats: selected }}
+          className={`ml-auto px-5 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 disabled:opacity-50`}
+          aria-disabled={selected.length === 0 || booking}
+          tabIndex={selected.length === 0 || booking ? -1 : 0}
         >
           {booking ? "Booking..." : "Book Now"}
-        </button>
+        </Link>
       </div>
     </div>
   );
